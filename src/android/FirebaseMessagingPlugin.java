@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -48,6 +49,7 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     private NotificationManager notificationManager;
     private FirebaseMessaging firebaseMessaging;
     private CallbackContext requestPermissionCallback;
+    protected String defaultNotificationChannel;
 
     @Override
     protected void pluginInitialize() {
@@ -108,6 +110,17 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
             sendNotification(lastBundle, callbackContext);
             lastBundle = null;
         }
+    }
+
+    @CordovaMethod
+    private void showNotification(CordovaArgs args, CallbackContext callbackContext) {
+        JSONObject data = args.getJSONObject(0);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, instance.defaultNotificationChannel)
+        .setContentTitle(data.title)
+        .setContentText(data.body);
+
+        notificationManager.notify(data.id, builder);
+        callbackContext.success();
     }
 
     @CordovaMethod
@@ -181,6 +194,12 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     @Override
     public void onResume(boolean multitasking) {
         this.isBackground = false;
+    }
+
+    static void setDefaultNotificationChannel(String channel) {
+        if (instance != null) {
+            instance.defaultNotificationChannel = channel;
+        }
     }
 
     static void sendNotification(RemoteMessage remoteMessage) {

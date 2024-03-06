@@ -32,6 +32,7 @@
     - [onMessage](#onmessage)
     - [onTokenRefresh](#ontokenrefresh)
     - [requestPermission](#requestpermission)
+    - [showNotification](#shownotification)
     - [setBadge](#setbadge)
     - [subscribe](#subscribe)
     - [unsubscribe](#unsubscribe)
@@ -407,3 +408,30 @@ cordova.plugins.firebase.messaging.unsubscribe("news");
 `Promise`<`void`\>
 
 Callback when operation is completed
+
+
+___
+
+### showNotification
+
+**showNotification**(`data`): `Promise`<`void`\>
+
+Show notification even application in foreground.
+
+**`Example`**
+
+```ts
+cordova.plugins.firebase.messaging.showNotification({});
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `Object` | Notification data. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+Filfiled promise when notification is shown.
