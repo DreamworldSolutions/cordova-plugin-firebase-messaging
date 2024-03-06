@@ -158,7 +158,7 @@
     self.notificationCallbackId = command.callbackId;
 
     if (self.lastNotification) {
-        [self sendBackgroundNotification:self.lastNotification];
+        [self sendNotification:self.lastNotification];
 
         self.lastNotification = nil;
     }

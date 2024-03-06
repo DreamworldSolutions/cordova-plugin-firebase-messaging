@@ -205,3 +205,18 @@ function(options) {
         exec(resolve, reject, PLUGIN_NAME, "requestPermission", [options || {}]);
     });
 };
+
+
+exports.showNotification =
+/**
+ * Show notification even application in foreground.
+ * @param {object} data notification data.
+ * @param {() => void} callback Callback function
+ * @param {(error: string) => void} [errorCallback] Error callback function
+ *
+ * @example
+ * cordova.plugins.firebase.messaging.showNotification({});
+ */
+function(data, callback, errorCallback) {
+    exec(callback, errorCallback, PLUGIN_NAME, "showNotification", [data || {}]);
+};
