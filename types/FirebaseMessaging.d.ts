@@ -44,6 +44,22 @@ export function onTokenRefresh(callback: () => void, errorCallback?: (error: str
  * });
  */
 export function onMessage(callback: (payload: PushPayload) => void, errorCallback?: (error: string) => void): void;
+
+/**
+ * Show notification even application in foreground.
+ * @param {object} data notification data.
+ * @param {() => void} callback Callback function
+ * @param {(error: string) => void} [errorCallback] Error callback function
+ *
+ * @example
+ * cordova.plugins.firebase.messaging.showNotification({});
+ */
+export function showNotification(data: {
+    body: string;
+    title: string;
+    tag: string;
+    id: string;
+}, callback: (payload: PushPayload) => void, errorCallback?: (error: string) => void): void;
 /**
  *
  * Registers background push notification callback.
