@@ -115,11 +115,15 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     @CordovaMethod
     private void showNotification(CordovaArgs args, CallbackContext callbackContext) {
         JSONObject data = args.getJSONObject(0);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, instance.defaultNotificationChannel)
-        .setContentTitle(data.title)
-        .setContentText(data.body);
+        private String body = options.optString("body");
+        private String title = options.optString("title");
+        private String id = options.optString("id");
 
-        notificationManager.notify(data.id, builder);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, instance.defaultNotificationChannel)
+        .setContentTitle(title)
+        .setContentText(body);
+
+        notificationManager.notify(id, builder);
         callbackContext.success();
     }
 
