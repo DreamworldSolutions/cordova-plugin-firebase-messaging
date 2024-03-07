@@ -217,6 +217,8 @@ exports.showNotification =
  * @example
  * cordova.plugins.firebase.messaging.showNotification({});
  */
-function(data, callback, errorCallback) {
-    exec(callback, errorCallback, PLUGIN_NAME, "showNotification", [data || {}]);
+function(data) {
+    return new Promise(function(resolve, reject) {
+        exec(resolve, reject, PLUGIN_NAME, "showNotification", [data || {}]);
+    });
 };

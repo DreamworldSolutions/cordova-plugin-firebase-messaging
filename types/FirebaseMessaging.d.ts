@@ -59,7 +59,7 @@ export function showNotification(data: {
     title: string;
     tag: string;
     id: string;
-}, callback: (payload: PushPayload) => void, errorCallback?: (error: string) => void): void;
+}): Promise<void>;
 /**
  *
  * Registers background push notification callback.

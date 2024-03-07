@@ -50,6 +50,7 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     private FirebaseMessaging firebaseMessaging;
     private CallbackContext requestPermissionCallback;
     protected String defaultNotificationChannel;
+    protected FirebaseMessagingPluginService firebaeMessagingPlugingService;
 
     @Override
     protected void pluginInitialize() {
@@ -114,17 +115,22 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
 
     @CordovaMethod
     private void showNotification(CordovaArgs args, CallbackContext callbackContext) {
-        JSONObject data = args.getJSONObject(0);
-        String body = data.optString("body");
-        String title = data.optString("title");
-        String id = data.optString("id");
+        try {
+            JSONObject data = args.getJSONObject(0);
+            
+            String body = data.optString("body");
+            String title = data.optString("title");
+            // String id = data.optString("id");
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, instance.defaultNotificationChannel)
-        .setContentTitle(title)
-        .setContentText(body);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(instance.firebaeMessagingPlugingService, instance.defaultNotificationChannel)
+            .setContentTitle(title)
+            .setContentText(body);
 
-        notificationManager.notify(id, builder);
-        callbackContext.success();
+            notificationManager.notify(10, builder.build());
+            callbackContext.success();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @CordovaMethod
@@ -203,6 +209,12 @@ public class FirebaseMessagingPlugin extends ReflectiveCordovaPlugin {
     static void setDefaultNotificationChannel(String channel) {
         if (instance != null) {
             instance.defaultNotificationChannel = channel;
+        }
+    }
+
+    static void setFirebaeMessagingPlugingService(FirebaseMessagingPluginService service) {
+        if (instance != null) {
+            instance.firebaeMessagingPlugingService = service;
         }
     }
 
